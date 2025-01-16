@@ -1,0 +1,66 @@
+<!-- contacts-detail.component.html -->
+<div *ngIf="contact" class="container mt-5">
+  <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show">
+    <strong>Error!</strong> {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="showError = false"></button>
+  </div>
+  <!-- Card for contact details -->
+  <div class="card p-4 shadow-sm">
+    <h2 class="text-center mb-4">Contact Details</h2>
+
+    <div *ngIf="isEditing; else viewMode">
+      <!-- Editable Fields -->
+      <div class="form-group mb-3">
+        <label for="contactName">Name:</label>
+        <input type="text" id="contactName" class="form-control" [(ngModel)]="contact.Name" required />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="contactEmail">Email:</label>
+        <input type="email" id="contactEmail" class="form-control" [(ngModel)]="contact.Email" required />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="contactPhone">Phone Number:</label>
+        <input type="text" id="contactPhone" class="form-control" [(ngModel)]="contact.PhoneNumber" required />
+      </div>
+
+      <!-- Buttons for save and cancel -->
+      <div class="d-flex justify-content-end">
+        <button (click)="saveContact()" class="btn btn-primary me-2">
+          Save
+        </button>
+        <button (click)="cancelEditing()" class="btn btn-secondary">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- View Mode for non-editable contact details -->
+    <ng-template #viewMode>
+      <p><strong>Name:</strong> {{ contact.Name }}</p>
+      <p><strong>Email:</strong> {{ contact.Email }}</p>
+      <p><strong>Phone Number:</strong> {{ contact.PhoneNumber }}</p>
+
+      <!-- Action buttons in view mode -->
+      <div class="d-flex justify-content-between">
+        <button (click)="startEditing()" class="btn btn-warning mx-1">
+          Edit
+        </button>
+        <button (click)="deleteContact()" class="btn btn-danger mx-4">
+          Delete
+        </button>
+        <button [routerLink]="['/contacts']" routerLinkActive="router-link-active"
+          class="btn btn-outline-primary ms-auto">
+          Back
+        </button>
+      </div>
+    </ng-template>
+
+    <!-- Message for when the contact is being edited by another user -->
+    <div *ngIf="isOtherUserEditing" class="alert alert-warning mt-3">
+      <strong>Warning:</strong> This contact is under editing by another user.
+      Kindly try again later.
+    </div>
+  </div>
+</div>

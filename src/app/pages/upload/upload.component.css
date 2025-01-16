@@ -1,0 +1,59 @@
+/* General Styling for the Upload Section */
+.upload-container {
+  max-width: 600px;
+  margin: auto;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.upload-container .card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container h2 {
+  color: #007bff;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* File Input Styling */
+.file-input-container input[type="file"] {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+/* Error Container Styling */
+.error-container {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.error-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.error-item {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Upload Button Styling */
+.upload-button-container {
+  margin-top: 20px;
+}
+
+.upload-button {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 10px;
+}
+
+.upload-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

@@ -1,0 +1,97 @@
+/* Card Styling */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  color: #007bff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Search Input */
+input.form-control {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+/* Button Styling */
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-sm {
+  padding: 5px 12px;
+  font-size: 0.875rem;
+}
+
+/* Table Styling */
+table.table-hover {
+  width: 100%;
+  margin-top: 20px;
+}
+
+th {
+  cursor: pointer;
+  background-color: #f8f9fa;
+}
+
+th:hover {
+  background-color: #e2e6ea;
+}
+
+/* Table Row Hover Effect */
+table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Pagination Styling */
+.pagination {
+  margin-top: 20px;
+}
+
+.pagination .page-item .page-link {
+  color: #007bff;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}

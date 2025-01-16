@@ -1,0 +1,76 @@
+<!-- contacts.component.html -->
+<div class="container mt-5">
+  <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show">
+    <strong>Error!</strong> {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="showError = false"></button>
+  </div>
+  <!-- Card to wrap the entire contacts section -->
+  <div class="card p-4 shadow-sm">
+    <h2 class="text-center mb-4">Contact List</h2>
+
+    <!-- Search and Filter Row -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search Contacts"
+          [(ngModel)]="searchText"
+          (input)="applyFilter()">
+      </div>
+      <div class="col-md-6 text-end">
+        <button class="btn btn-danger mx-1" (click)="batchDelete()" [disabled]="!anySelected()">Delete Selected</button>
+        <button class="btn btn-success" (click)="exportSelected()"[disabled]="!anySelected()">Export Selected</button>
+      </div>
+    </div>
+
+    <!-- Table for Contacts -->
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th><input type="checkbox" (change)="selectAll($event)" /></th>
+          <th scope="col" (click)="sortData('Id')" [class.sorted]="currentSortColumn === 'Id'" style="cursor: pointer;">Id</th>
+          <th scope="col" (click)="sortData('Name')" [class.sorted]="currentSortColumn === 'Name'" style="cursor: pointer;">Name</th>
+          <th scope="col" (click)="sortData('Email')" [class.sorted]="currentSortColumn === 'Email'" style="cursor: pointer;">Email</th>
+          <th scope="col" (click)="sortData('PhoneNumber')" [class.sorted]="currentSortColumn === 'PhoneNumber'" style="cursor: pointer;">Phone</th>
+
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of paginatedData">
+          <td><input type="checkbox" [(ngModel)]="contact.selected" /></td>
+          <td>{{ contact.Id }}</td>
+          <td>{{ contact.Name }}</td>
+          <td>{{ contact.Email }}</td>
+          <td>{{ contact.PhoneNumber }}</td>
+          <td>
+            <!-- Apply consistent horizontal margin using 'mx-1' for space between buttons -->
+            <!-- <button class="btn btn-info btn-sm mx-1" (click)="viewContact(contact)">View</button> -->
+            <button class="btn btn-warning btn-sm mx-1" (click)="openEditModal(contact)">View</button>
+            <!-- <button class="btn btn-danger btn-sm mx-1" (click)="deleteContact(contact)">Delete</button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item mx-1" [class.disabled]="currentPage === 1">
+              <a class="page-link" href="javascript:void(0);" (click)="goToPage(currentPage - 1)">Previous</a>
+            </li>
+            <li *ngFor="let page of pages" class="page-item mx-1" [class.active]="currentPage === page">
+              <a class="page-link" href="javascript:void(0);" (click)="goToPage(page)">{{ page }}</a>
+            </li>
+            <li class="page-item mx-1" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" href="javascript:void(0);" (click)="goToPage(currentPage + 1)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

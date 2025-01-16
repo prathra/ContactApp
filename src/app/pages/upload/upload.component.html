@@ -1,0 +1,23 @@
+<div class="upload-container card p-4">
+  <h2 class="text-center mb-4">Upload Contact Excel File</h2>
+
+  <!-- File Input Section -->
+  <div class="file-input-container mb-3">
+    <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls" class="form-control-file" />
+  </div>
+
+  <!-- Error Display Section -->
+  <div *ngIf="errors.length > 0" class="error-container alert alert-danger">
+    <h4 class="alert-heading">Errors:</h4>
+    <ul class="error-list">
+      <li *ngFor="let error of errors" class="error-item">{{ error }}</li>
+    </ul>
+  </div>
+
+  <!-- Upload Button Section -->
+  <div class="upload-button-container text-center">
+    <button class="btn btn-primary upload-button" (click)="uploadData()" [disabled]="errors.length > 0 || !parsedData">
+      Upload
+    </button>
+  </div>
+</div>
