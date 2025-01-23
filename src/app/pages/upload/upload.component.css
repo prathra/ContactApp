@@ -1,59 +1,40 @@
-/* General Styling for the Upload Section */
-.upload-container {
-  max-width: 600px;
-  margin: auto;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+/* Table container with scroll */
+.table-container {
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto;
+  padding-right: 10px; /* Ensure the scrollbar does not overlap */
 }
 
-.upload-container .card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Additional Styles */
+.table th, .table td {
+  vertical-align: middle;
+  text-align: center;
 }
 
-.upload-container h2 {
-  color: #007bff;
-  font-size: 1.8rem;
-  font-weight: bold;
+.table {
+  margin-top: 20px;
 }
 
-/* File Input Styling */
-.file-input-container input[type="file"] {
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  padding: 8px;
-}
-
-/* Error Container Styling */
 .error-container {
   margin-top: 20px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
-.error-list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.error-item {
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-/* Upload Button Styling */
-.upload-button-container {
-  margin-top: 20px;
+  padding: 15px;
 }
 
 .upload-button {
+  font-size: 16px;
+  padding: 10px 30px;
+  border-radius: 5px;
   width: 100%;
-  font-size: 1.1rem;
-  padding: 10px;
 }
 
-.upload-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error-class {
+  background-color: #f8d7da;  /* Light red background */
+  color: #721c24;             /* Dark red text */
+  font-weight: bold;          /* Bold text */
+  padding: 0.5rem;            /* Padding to make it look better */
 }

@@ -75,6 +75,7 @@ export class DetailsComponent implements OnInit {
       .updateContact(this.contactId, this.contact)
       .subscribe((updatedContact) => {
         if (updatedContact) {
+          debugger;
           this.contact = updatedContact;
           this.isEditing = false;
           const index = this.localstoredArray.indexOf(this.contactId);

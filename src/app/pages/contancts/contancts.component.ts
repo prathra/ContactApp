@@ -7,7 +7,7 @@ import { MasterService } from '../../services/master.service';
 import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-contancts',
-  imports: [FormsModule,  CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './contancts.component.html',
   styleUrl: './contancts.component.css',
 })
@@ -29,6 +29,7 @@ export class ContanctsComponent implements OnInit {
   constructor(private contactService: MasterService, private route: Router) {}
 
   ngOnInit() {
+    debugger;
     this.contactService.getContacts().subscribe((res: any) => {
       this.contacts = res;
     });
@@ -86,6 +87,7 @@ export class ContanctsComponent implements OnInit {
   }
 
   applyFilter() {
+    debugger;
     if (this.searchText) {
       this.contacts = this.contacts.filter(
         (contact: any) =>
@@ -194,29 +196,20 @@ export class ContanctsComponent implements OnInit {
     link.click();
   }
 
-  viewContact(contact: any) {
-    alert(`View Contact: ${contact.Name}`);
-  }
-
-  editContact(contact: any) {
-    alert(`Edit Contact: ${contact.Name}`);
-  }
-
   deleteContact(contact: any) {
-     if (confirm('Are you sure you want to delete this contact?')) {
+    if (confirm('Are you sure you want to delete this contact?')) {
       this.contactService.deleteContact(contact.Id).subscribe((isDeleted) => {
         if (isDeleted) {
           alert('Contact deleted successfully');
           this.calculateTotalPages();
           this.applyPagination();
         } else {
-           this.showError = true;
-           this.errorMessage = 'Error deleting contact.';
+          this.showError = true;
+          this.errorMessage = 'Error deleting contact.';
         }
       });
     }
   }
-
 
   closeModal() {
     this.isModalVisible = false; // Close modal
@@ -245,5 +238,27 @@ export class ContanctsComponent implements OnInit {
   // Check if any contact is selected
   anySelected(): boolean {
     return this.paginatedData.some((contact: any) => contact.selected);
+  }
+
+  ///
+
+  saveContact(contact: any) {
+    debugger;
+    contact.isEditing = false; // Disable editing mode
+    // Optionally, save the contact changes to your server or localStorage
+    // this.contactService.updateContact(contact);
+    this.contactService
+      .updateContact(contact.Id, contact)
+      .subscribe((updatedContact) => {
+        if (updatedContact) {
+          alert('Succesful Updated');
+        } else {
+          alert('Error updating contact.');
+        }
+      });
+  }
+
+  editContact(contact: any) {
+    contact.isEditing = true; // Set editing mode
   }
 }

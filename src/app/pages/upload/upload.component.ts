@@ -13,10 +13,16 @@ import { Router } from '@angular/router';
 export class UploadComponent {
   parsedData: any[] = [];
   errors: string[] = [];
-
+  showEror: boolean = false;
+  invalidEmail: string = '';
+  invalidPhone : string = '';
+  validData: any[]=[];
   constructor(private masterService: MasterService, private route: Router) {}
 
   onFileSelected(event: any): void {
+    debugger;
+    console.log(this.parsedData);
+
     const file = event.target.files[0]; // Get the first file selected
 
     if (!file) {
@@ -31,7 +37,7 @@ export class UploadComponent {
     );
 
     if (isValidFile) {
-      // Proceed to read the file if it's a valid Excel file
+      // Proceed to read the file if it's a valid Excel fil e
       console.log('Selected file:', file.name);
       this.readFile(file);
     } else {
@@ -42,6 +48,7 @@ export class UploadComponent {
   }
 
   readFile(file: File): void {
+    debugger;
     const reader = new FileReader();
     reader.onload = (e: any) => {
       const data = new Uint8Array(e.target.result);
@@ -49,7 +56,7 @@ export class UploadComponent {
       const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
       const sheet = workbook.Sheets[sheetName];
       this.parsedData = XLSX.utils.sheet_to_json(sheet);
-      console.log('', this.parsedData);
+      console.log('p', this.parsedData);
 
       // Validate the parsed data
       this.validateData();
@@ -64,31 +71,64 @@ export class UploadComponent {
 
     for (let i = 0; i < this.parsedData.length; i++) {
       const row = this.parsedData[i];
-      if (!row.Name || !row.Email || !row.PhoneNumber) {
+      let missingFields = [];
+      this.invalidEmail = '';
+      this.invalidPhone = '';
+      if (!row.Name) {
+        missingFields.push('Name');
+      }
+      if (!row.Email) {
+        missingFields.push('Email');
+      }else
+      if(!emailRegex.test(row.Email)) {
+        this.showEror = true;
+       this.invalidEmail = `Invalid email format.`;
+      }
+
+      if (!row.PhoneNumber) {
+        missingFields.push('Phone Number');
+      }else
+      if (!phoneRegex.test(row.PhoneNumber)) {
+        this.invalidPhone = `Invalid phone number format.`;
+      }
+
+
+      if (missingFields.length > 0) {
+        this.showEror = true;
+
+        // Show which specific fields are missing
+        this.parsedData[i].error = `${missingFields.join(
+          ', '
+        )} field are missing.`;
         this.errors.push(
           `Row ${
             i + 1
-          } is missing essential fields: Name, Email, or Phone Number.`
+          } is missing the following essential fields: ${missingFields.join(
+            ', '
+          )}.`
         );
-      } else {
-        if (!emailRegex.test(row.Email)) {
-          this.errors.push(`Row ${i + 1} has an invalid email format.`);
-        }
-        if (!phoneRegex.test(row.PhoneNumber)) {
-          this.errors.push(`Row ${i + 1} has an invalid phone number format.`);
-        }
       }
+      if(this.invalidEmail )
+      {
+        this.parsedData[i].error = `${this.parsedData[i].error || ''} ${this.invalidEmail}`
+      }
+      if(this.invalidPhone){
+        this.parsedData[i].error = `${this.parsedData[i].error || ''} ${this.invalidPhone}`
+      }
+
+      if(!this.parsedData[i].error){
+        this.validData.push(this.parsedData[i])
+      }
+
     }
   }
 
   uploadData(): void {
-    if (this.errors.length === 0 && this.parsedData.length > 0) {
-      const jsonString = JSON.stringify(this.parsedData);
+
+      const jsonString = JSON.stringify(this.validData);
       localStorage.setItem('contactsKey', jsonString);
       alert('Contacts uploaded successfully!');
       this.route.navigateByUrl('contacts');
-    } else {
-      alert('There are errors in the data. Please fix them before uploading.');
-    }
+
   }
 }
